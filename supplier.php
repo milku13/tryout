@@ -1,6 +1,8 @@
 <?php
 include 'koneksi.php';
-
+session_start();
+if ($_SESSION["username"]){
+    $username = $_SESSION["username"];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,7 +15,7 @@ include 'koneksi.php';
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>KASIR</title>
+    <title>ADMIN</title>
 
     <!-- Custom fonts for this template-->
     <link href="sbadmin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -36,9 +38,9 @@ include 'koneksi.php';
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center">
                 <div class="sidebar-brand-icon rotate-n-15">
-                <i class="fas fa-cash-register"></i>
+                <i class="fas fa-user"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">KASIR <sup></sup></div>
+                <div class="sidebar-brand-text mx-3">ADMIN <sup></sup></div>
             </a>
 
             <!-- Divider -->
@@ -65,7 +67,7 @@ include 'koneksi.php';
                     <hr class="sidebar-divider">
                     <p style="display: block;"><a class="collapse-item" href="pelanggan.php" style="color: white; font-weight: bold; font-size: 20px;">Pelanggan</a></p>
                     <hr class="sidebar-divider">
-                    <p style="display: block;"><a class="collapse-item" href="supplier.php" style="color: white; font-weight: bold; font-size: 20px;">Suplier</a></p>                
+                    <p style="display: block;"><a class="collapse-item" style="color: white; font-weight: bold; font-size: 20px;">Suplier</a></p>                
                     <hr class="sidebar-divider">              
                 </div>
             </div>
@@ -80,8 +82,7 @@ include 'koneksi.php';
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Transaksi</h6>
-                        <a class="collapse-item" href="transaksi/penjualan.php" style="font-weight: bold; font-size: 15px;">Penjualan</a>
-                        <a class="collapse-item" href="transaksi/penjualan_detail.php" style="font-weight: bold; font-size: 15px;">Detail Penjualan</a>
+                        <a class="collapse-item" href="transaksi/penjualan_detail.php" style="font-weight: bold; font-size: 15px;">DETAIL PENJUALAN</a>
                         <a class="collapse-item" href="transaksi/pembelian.php" style="font-weight: bold; font-size: 15px;">Pembelian</a>
                         <a class="collapse-item" href="transaksi/pembelian_detail.php" style="font-weight: bold; font-size: 15px;">Detail_Pembelian</a>
                     </div>
@@ -177,7 +178,7 @@ include 'koneksi.php';
                         echo "<td class='text-center'>{$produk['tlp_hp']}</td>"; // Pindahkan ke tengah dengan menambahkan kelas text-center di sini
                         echo "<td class='text-center'>{$produk['alamat_suplier']}</td>"; // Pindahkan ke tengah dengan menambahkan kelas text-center di sini
                         echo "<td class='text-center'>";
-                        echo "<a href='edit.php?id={$produk['toko_id']}' class='btn btn-warning btn-sm'>Edit</a>";
+                        echo "<a href='edit/edit_supplier.php?id={$produk['suplier_id']}' class='btn btn-warning btn-sm'>Edit</a>";
                         echo " ";
                         echo "<a href='delete/hapus_supplier.php?id={$produk['suplier_id']}' class='btn btn-danger btn-sm'>Hapus</a>";
                         echo "</td>";
@@ -216,7 +217,7 @@ include 'koneksi.php';
                 <div class="modal-body">Jika logout anda harus login kembali!</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.php">Logout</a>
+                    <a class="btn btn-primary" href="logout.php">Logout</a>
                 </div>
             </div>
         </div>
@@ -233,5 +234,5 @@ include 'koneksi.php';
     <script src="sbadmin/js/sb-admin-2.min.js"></script>
 
 </body>
-
 </html>
+<?php } ?>

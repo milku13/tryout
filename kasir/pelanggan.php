@@ -1,16 +1,12 @@
 <?php
 
-include 'koneksi.php';
+include '../koneksi.php';
 $sql="SELECT * FROM produk";
 $result=mysqli_query($conn,$sql);
 $sql="SELECT * FROM produk_kategori";
 $result1=mysqli_query($conn,$sql);
 $sql="SELECT * FROM penjualan";
 $result2=mysqli_query($conn,$sql);
-
-session_start();
-if ($_SESSION["username"]){
-    $username = $_SESSION["username"];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -24,7 +20,7 @@ if ($_SESSION["username"]){
     <title>Dashboard</title>
 
     <!-- Custom fonts for this template-->
-    <link href="sbadmin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="../sbadmin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet"><!DOCTYPE html>
@@ -38,10 +34,10 @@ if ($_SESSION["username"]){
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Dashboard</title>
+    <title>KASIR</title>
 
     <!-- Custom fonts for this template-->
-    <link href="sbadmin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="../sbadmin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
@@ -62,9 +58,9 @@ if ($_SESSION["username"]){
             <!-- Sidebar - Brand -->
             <div class="sidebar-brand d-flex align-items-center justify-content-center">
                 <div class="sidebar-brand-icon rotate-n-15">
-                <i class="fas fa-user"></i>
+                <i class="fas fa-cash-register"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3 ">ADMIN <sup></sup></div>
+                <div class="sidebar-brand-text mx-2 ">KASIR <sup></sup></div>
             </div>
 
             <!-- Divider -->
@@ -72,7 +68,7 @@ if ($_SESSION["username"]){
 
             <!-- Nav Item - Dashboard -->
             <div class="text-center" >
-                <a class="nav-link">
+                <a class="nav-link" href="dashboard.php">
                     <span class="dashboard" style="font-size: 20px; color: white; font-weight: bold;">Dashboard</span>
                 </a>
             </div>
@@ -83,15 +79,9 @@ if ($_SESSION["username"]){
             <!-- Nav Item - Pages Collapse Menu -->
             <div id="collapseTwo" class="text-center" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-blue py-1 collapse-inner rounded">
-                    <p style="display: block;"><a class="collapse-item" href="produk.php" style="color: white; font-weight: bold; font-size: 20px;">Barang</a></p>
-                    <hr class="sidebar-divider">
-                    <p style="display: block;"><a class="collapse-item" href="kategori.php" style="color: white; font-weight: bold; font-size: 20px;">Kategori</a></p>
-                    <hr class="sidebar-divider">
-                    <p style="display: block;"><a class="collapse-item" href="toko.php" style="color: white; font-weight: bold; font-size: 20px;">Toko</a></p>
-                    <hr class="sidebar-divider">
                     <p style="display: block;"><a class="collapse-item" href="pelanggan.php" style="color: white; font-weight: bold; font-size: 20px;">Pelanggan</a></p>
                     <hr class="sidebar-divider">
-                    <p style="display: block;"><a class="collapse-item" href="supplier.php" style="color: white; font-weight: bold; font-size: 20px;">Suplier</a></p>                
+                    <p style="display: block;"><a class="collapse-item" href="stok_barang.php" style="color: white; font-weight: bold; font-size: 20px;">Stok Barang</a></p>                
                     <hr class="sidebar-divider">              
                 </div>
             </div>
@@ -106,22 +96,8 @@ if ($_SESSION["username"]){
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Transaksi</h6>
-                        <a class="collapse-item" href="transaksi/penjualan_detail.php" style="font-weight: bold; font-size: 15px;">DETAIL PENJUALAN</a>
-                        <a class="collapse-item" href="transaksi/pembelian.php" style="font-weight: bold; font-size: 15px;">Pembelian</a>
-                        <a class="collapse-item" href="transaksi/pembelian_detail.php" style="font-weight: bold; font-size: 15px;">Detail_Pembelian</a>
-                    </div>
-                </div>
-            </li>
-            <li class="nav-item text-center">
-                <a class="nav-link collapsed text-center" href="#" data-toggle="collapse" data-target="#collapsePages"
-                    aria-expanded="true" aria-controls="collapsePages">
-                    <i class="fas fa-fw fa-folder"></i>
-                    <span>DATA USER</span>
-                </a>
-                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">USER</h6>
-                        <a class="collapse-item" href="user.php" style="font-weight: bold; font-size: 15px;">Data User</a>
+                        <a class="collapse-item" href="transaksi.php" style="font-weight: bold; font-size: 15px;">TRANSAKSI</a>
+                        <a class="collapse-item" href="tabel_penjualan.php" style="font-weight: bold; font-size: 15px;">Detail</a>
                     </div>
                 </div>
             </li>
@@ -205,83 +181,58 @@ if ($_SESSION["username"]){
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
-                    </div>
-
                     <!-- Content Row -->
-                    <div class="row">
+                    <div class="content-wrapper" style="height: 91.6vh; background-color: #fff; padding: 80px;">
+                    <div class="content-header"></div>
+                    <h2 class="text-center" style="margin-top: 6px;">PELANGGAN</h2>
+                    <form action="tambah/tambah_pelanggan_kasir.php" method="get">
+                        <button type='submit' class='btn btn-success mb-2'>Tambah</button>
+                    </form>
+                    <table class="table table-bordered table-sm">
+                        <thead>
+                            <tr style="color: black;">
+                                <th class="text-center">Nama Pelanggan</th> <!-- Pindahkan ke tengah dengan menambahkan kelas text-center di sini -->
+                                <th class="text-center">Nama Toko</th> <!-- Pindahkan ke tengah dengan menambahkan kelas text-center di sini -->
+                                <th class="text-center">Alamat</th> <!-- Pindahkan ke tengah dengan menambahkan kelas text-center di sini -->
+                                <th class="text-center">No Hp</th>
+                                <th class="text-center">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
 
-                        <!-- Earnings (Monthly) Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-primary shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1 text-center"><h4>Data Barang</h4></div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
-                                            <span class="info-box-number">
-                                            <br><h4 class="text-center"><b><?php echo mysqli_num_rows($result)?></b></h4></br>
-                                            </span>
-                                        </div>
-                                        <div class="col-auto">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-primary shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1 text-center"><h4>KATEGORI</h4></div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
-                                            <span class="info-box-number">
-                                            <br><h2 class="text-center"><b><?php echo mysqli_num_rows($result1)?></b></h2></br>
-                                            </span>
-                                        </div>
-                                        <div class="col-auto">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-primary shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1 text-center"><h4>TELAH TERJUAL</h4></div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
-                                            <span class="info-box-number">
-                                            <br><h2 class="text-center"><b><?php echo mysqli_num_rows($result2)?></b></h2></br>
-                                            </span>
-                                        </div>
-                                        <div class="col-auto">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-primary shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1 text-center"><h4>STOK BARANG</h4></div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
-                                            <span class="info-box-number">
-                                            <br><h2 class="text-center"><b><?php echo mysqli_num_rows($result)?></b></h2></br>
-                                            </span>
-                                        </div>
-                                        <div class="col-auto">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                                <?php
+                                        try {
+                                            $pdo = new PDO("mysql:host=localhost;dbname=db_kasir", "root", "");
+                                            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                                            $stmt = $pdo->prepare("SELECT pelanggan.*, toko.nama_toko FROM pelanggan LEFT JOIN toko ON pelanggan.toko_id = toko.toko_id");
+                                            $stmt->execute();
+                                            $produkData = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                                            foreach ($produkData as $produk) {
+                                                echo "<tr>";
+                                                echo "<td class='text-center'>{$produk['nama_pelanggan']}</td>";
+                                                // Periksa apakah kunci 'toko' ada dalam array $produk sebelum mengaksesnya
+                                                echo "<td class='text-center'>" . (isset($produk['nama_toko']) ? $produk['nama_toko'] : '') . "</td>";
+                                                echo "<td class='text-center'>{$produk['alamat']}</td>";
+                                                echo "<td class='text-center'>{$produk['no_hp']}</td>";
+                                                echo "<td class='text-center'>";
+                                                echo "<a href='edit/edit_pelanggan_kasir.php?id={$produk['pelanggan_id']}' class='btn btn-warning btn-sm'>Edit</a>";
+                                                echo " ";
+                                                echo "<a href='delete/hapus_pelanggan.php?id={$produk['pelanggan_id']}' class='btn btn-danger btn-sm'>Hapus</a>";
+                                                echo "</td>";
+                                                echo "</tr>";
+                                            }
+
+                                            // Close the database connection
+                                            $pdo = null;
+                                        } catch(PDOException $e) {
+                                            // Print PDOException message
+                                            echo $e->getMessage();
+                                        }
+                                    ?>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -309,34 +260,34 @@ if ($_SESSION["username"]){
                 <div class="modal-body">Jika logout anda harus login kembali!</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="logout.php">Logout</a>
+                    <a class="btn btn-primary" href="../logout.php">Logout</a>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Bootstrap core JavaScript-->
-    <script src="sbadmin/vendor/jquery/jquery.min.js"></script>
-    <script src="sbadmin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../sbadmin/vendor/jquery/jquery.min.js"></script>
+    <script src="../sbadmin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="sbadmin/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="../sbadmin/vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="sbadmin/js/sb-admin-2.min.js"></script>
+    <script src="../sbadmin/js/sb-admin-2.min.js"></script>
 
     <!-- Page level plugins -->
-    <script src="sbadmin/vendor/chart.js/Chart.min.js"></script>
+    <script src="../sbadmin/vendor/chart.js/Chart.min.js"></script>
 
     <!-- Page level custom scripts -->
-    <script src="sbadmin/js/demo/chart-area-demo.js"></script>
-    <script src="sbadmin/js/demo/chart-pie-demo.js"></script>
+    <script src="../sbadmin/js/demo/chart-area-demo.js"></script>
+    <script src="../sbadmin/js/demo/chart-pie-demo.js"></script>
 
 </body>
 
 </html>
     <!-- Custom styles for this template-->
-    <link href="sbadmin/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="../sbadmin/css/sb-admin-2.min.css" rel="stylesheet">
 </head>
-<?php } ?>
+
     

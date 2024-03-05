@@ -1,16 +1,12 @@
 <?php
-
-include 'koneksi.php';
+session_start();
+include '../koneksi.php';
 $sql="SELECT * FROM produk";
 $result=mysqli_query($conn,$sql);
 $sql="SELECT * FROM produk_kategori";
 $result1=mysqli_query($conn,$sql);
 $sql="SELECT * FROM penjualan";
 $result2=mysqli_query($conn,$sql);
-
-session_start();
-if ($_SESSION["username"]){
-    $username = $_SESSION["username"];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -24,7 +20,7 @@ if ($_SESSION["username"]){
     <title>Dashboard</title>
 
     <!-- Custom fonts for this template-->
-    <link href="sbadmin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="../sbadmin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet"><!DOCTYPE html>
@@ -41,13 +37,13 @@ if ($_SESSION["username"]){
     <title>SB Admin 2 - Dashboard</title>
 
     <!-- Custom fonts for this template-->
-    <link href="sbadmin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="../sbadmin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    <link href="sbadmin/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="../sbadmin/css/sb-admin-2.min.css" rel="stylesheet">
 
 </head>
 
@@ -62,9 +58,9 @@ if ($_SESSION["username"]){
             <!-- Sidebar - Brand -->
             <div class="sidebar-brand d-flex align-items-center justify-content-center">
                 <div class="sidebar-brand-icon rotate-n-15">
-                <i class="fas fa-user"></i>
+                <i class="fas fa-cash-register"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3 ">ADMIN <sup></sup></div>
+                <div class="sidebar-brand-text mx-2 ">KASIR <sup></sup></div>
             </div>
 
             <!-- Divider -->
@@ -72,7 +68,7 @@ if ($_SESSION["username"]){
 
             <!-- Nav Item - Dashboard -->
             <div class="text-center" >
-                <a class="nav-link">
+                <a class="nav-link" href="dashboard.php">
                     <span class="dashboard" style="font-size: 20px; color: white; font-weight: bold;">Dashboard</span>
                 </a>
             </div>
@@ -83,15 +79,9 @@ if ($_SESSION["username"]){
             <!-- Nav Item - Pages Collapse Menu -->
             <div id="collapseTwo" class="text-center" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-blue py-1 collapse-inner rounded">
-                    <p style="display: block;"><a class="collapse-item" href="produk.php" style="color: white; font-weight: bold; font-size: 20px;">Barang</a></p>
-                    <hr class="sidebar-divider">
-                    <p style="display: block;"><a class="collapse-item" href="kategori.php" style="color: white; font-weight: bold; font-size: 20px;">Kategori</a></p>
-                    <hr class="sidebar-divider">
-                    <p style="display: block;"><a class="collapse-item" href="toko.php" style="color: white; font-weight: bold; font-size: 20px;">Toko</a></p>
-                    <hr class="sidebar-divider">
                     <p style="display: block;"><a class="collapse-item" href="pelanggan.php" style="color: white; font-weight: bold; font-size: 20px;">Pelanggan</a></p>
                     <hr class="sidebar-divider">
-                    <p style="display: block;"><a class="collapse-item" href="supplier.php" style="color: white; font-weight: bold; font-size: 20px;">Suplier</a></p>                
+                    <p style="display: block;"><a class="collapse-item" href="stok_barang.php" style="color: white; font-weight: bold; font-size: 20px;">Stok Barang</a></p>                
                     <hr class="sidebar-divider">              
                 </div>
             </div>
@@ -106,22 +96,8 @@ if ($_SESSION["username"]){
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Transaksi</h6>
-                        <a class="collapse-item" href="transaksi/penjualan_detail.php" style="font-weight: bold; font-size: 15px;">DETAIL PENJUALAN</a>
-                        <a class="collapse-item" href="transaksi/pembelian.php" style="font-weight: bold; font-size: 15px;">Pembelian</a>
-                        <a class="collapse-item" href="transaksi/pembelian_detail.php" style="font-weight: bold; font-size: 15px;">Detail_Pembelian</a>
-                    </div>
-                </div>
-            </li>
-            <li class="nav-item text-center">
-                <a class="nav-link collapsed text-center" href="#" data-toggle="collapse" data-target="#collapsePages"
-                    aria-expanded="true" aria-controls="collapsePages">
-                    <i class="fas fa-fw fa-folder"></i>
-                    <span>DATA USER</span>
-                </a>
-                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">USER</h6>
-                        <a class="collapse-item" href="user.php" style="font-weight: bold; font-size: 15px;">Data User</a>
+                        <a class="collapse-item" href="transaksi.php" style="font-weight: bold; font-size: 15px;">TRANSAKSI</a>
+                        <a class="collapse-item" href="tabel_penjualan.php" style="font-weight: bold; font-size: 15px;">Penjualan</a>
                     </div>
                 </div>
             </li>
@@ -144,60 +120,17 @@ if ($_SESSION["username"]){
 
                 <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
-                    <!-- Sidebar Toggle (Topbar) -->
-                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                        <i class="fa fa-bars"></i>
-                    </button>
-
-                    <!-- Topbar Search -->
-
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
-
-                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-                        <li class="nav-item dropdown no-arrow d-sm-none">
-                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-search fa-fw"></i>
-                            </a>
-                            <!-- Dropdown - Messages -->
-                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                                aria-labelledby="searchDropdown">
-                                <form class="form-inline mr-auto w-100 navbar-search">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control bg-light border-0 small"
-                                            placeholder="Search for..." aria-label="Search"
-                                            aria-describedby="basic-addon2">
-                                        <div class="input-group-append">
-                                            <button class="btn btn-primary" type="button">
-                                                <i class="fas fa-search fa-sm"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
+                    <ul class="navbar-nav ml-auto align-items-center">
+                        <!-- User Info -->
+                        <li class="nav-item">
+                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                            Logout
+                        </a>
                         </li>
-                        <!-- Nav Item - User Information -->
-                        <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"></span>
-                                <i class="fas fa-user"></i>
-                            </a>
-                            <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="userDropdown">
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Logout
-                                </a>
-                            </div>
-                        </li>
-
                     </ul>
-
                 </nav>
                 <!-- End of Topbar -->
 
@@ -223,10 +156,11 @@ if ($_SESSION["username"]){
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1 text-center"><h4>Data Barang</h4></div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
                                             <span class="info-box-number">
-                                            <br><h4 class="text-center"><b><?php echo mysqli_num_rows($result)?></b></h4></br>
+                                            <br><h2 class="text-center"><b><?php echo mysqli_num_rows($result)?></b></h2></br>
                                             </span>
                                         </div>
                                         <div class="col-auto">
+                                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -237,13 +171,14 @@ if ($_SESSION["username"]){
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1 text-center"><h4>KATEGORI</h4></div>
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"><h4>KATEGORI</h4></div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
                                             <span class="info-box-number">
                                             <br><h2 class="text-center"><b><?php echo mysqli_num_rows($result1)?></b></h2></br>
                                             </span>
                                         </div>
                                         <div class="col-auto">
+                                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -261,6 +196,7 @@ if ($_SESSION["username"]){
                                             </span>
                                         </div>
                                         <div class="col-auto">
+                                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -271,13 +207,14 @@ if ($_SESSION["username"]){
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1 text-center"><h4>STOK BARANG</h4></div>
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1 text-center"><h4>sTOK BARANG</h4></div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
                                             <span class="info-box-number">
                                             <br><h2 class="text-center"><b><?php echo mysqli_num_rows($result)?></b></h2></br>
                                             </span>
                                         </div>
                                         <div class="col-auto">
+                                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -309,34 +246,34 @@ if ($_SESSION["username"]){
                 <div class="modal-body">Jika logout anda harus login kembali!</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="logout.php">Logout</a>
+                    <a class="btn btn-primary" href="../login.php">Logout</a>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Bootstrap core JavaScript-->
-    <script src="sbadmin/vendor/jquery/jquery.min.js"></script>
-    <script src="sbadmin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../sbadmin/vendor/jquery/jquery.min.js"></script>
+    <script src="../sbadmin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="sbadmin/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="../sbadmin/vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="sbadmin/js/sb-admin-2.min.js"></script>
+    <script src="../sbadmin/js/sb-admin-2.min.js"></script>
 
     <!-- Page level plugins -->
-    <script src="sbadmin/vendor/chart.js/Chart.min.js"></script>
+    <script src="../sbadmin/vendor/chart.js/Chart.min.js"></script>
 
     <!-- Page level custom scripts -->
-    <script src="sbadmin/js/demo/chart-area-demo.js"></script>
-    <script src="sbadmin/js/demo/chart-pie-demo.js"></script>
+    <script src="../sbadmin/js/demo/chart-area-demo.js"></script>
+    <script src="../sbadmin/js/demo/chart-pie-demo.js"></script>
 
 </body>
 
 </html>
     <!-- Custom styles for this template-->
-    <link href="sbadmin/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="../sbadmin/css/sb-admin-2.min.css" rel="stylesheet">
 </head>
-<?php } ?>
+
     

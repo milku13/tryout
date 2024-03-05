@@ -1,3 +1,8 @@
+
+<?php
+include 'koneksi.php';
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -64,15 +69,50 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Login di Sini </h1>
                                     </div>
-                                    <form class="user">
+                                    <?php 
+                                        if(isset($_POST['login'])){
+                                            $username = htmlspecialchars($_POST['username']);
+                                            $password = htmlspecialchars($_POST['password']);
+                                            
+                                            $admin = mysqli_query($conn, "SELECT * FROM user WHERE username = '$username'");
+                                            
+                                            if($data = mysqli_fetch_assoc($admin)){
+                                                if(password_verify($password, $data['password'])){
+                                                    $_SESSION['username'] = $data['username'];
+                                                    
+                                                    // Login Admin
+                                                    if($data['access_level'] == 'admin'){
+                                                        $_SESSION['user_id'] = $data['user_id'];
+                                                        $_SESSION['nama_lengkap'] = $data['nama_lengkap'];
+                                                        $_SESSION['access_level'] = $data['access_level'];
+                                                        header('location: dashboard.php');
+                                                        exit; // Penting untuk menghentikan eksekusi script setelah melakukan redirect
+                                                    }
+                                        
+                                                    // Login Petugas
+                                                    elseif($data['access_level'] == 'Kasir'){ // Perhatikan perbedaan kapitalisasi di sini
+                                                        $_SESSION['user_id'] = $data['user_id'];
+                                                        $_SESSION['nama_lengkap'] = $data['nama_lengkap'];
+                                                        $_SESSION['access_level'] = $data['access_level'];
+                                                        header('location: kasir/dashboard.php');
+                                                        exit; // Penting untuk menghentikan eksekusi script setelah melakukan redirect
+                                                    }
+                                        
+                                                } else {
+                                                    echo "Username dan password salah";
+                                                }
+                                            } else {
+                                                echo "Akun tidak ada";
+                                            }
+                                        }
+                                        ?>
+                                    <form method="POST" class="user">
                                         <div class="form-group">
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                                                 </div>
-                                                <input type="email" class="form-control form-control-user"
-                                                    id="exampleInputEmail" aria-describedby="emailHelp"
-                                                    placeholder="Enter Email Address...">
+                                                <input type="text" class="form-control form-control-user" name="username" placeholder="Enter Username...">
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -80,28 +120,13 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text"><i class="fas fa-lock"></i></span>
                                                 </div>
-                                                <input type="password" class="form-control form-control-user"
-                                                    id="exampleInputPassword" placeholder="Password">
+                                                <input type="password" class="form-control form-control-user" name="password" placeholder="Password">
                                             </div>
                                         </div>
-                                        <div class="form-group">
-                                            <div class="custom-control custom-checkbox small">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck">
-                                                <label class="custom-control-label" for="customCheck">Remember
-                                                    Me</label>
-                                            </div>
-                                        </div>
-                                        <a href="dashboard.php" class="btn btn-primary btn-user btn-block">
+                                        <button type="submit" name="login" class="btn btn-primary btn-user btn-block">
                                             Login
-                                        </a>
-                                        <hr>
+                                        </button>
                                     </form>
-                                    <div class="text-center">
-                                        <a class="small" href="dashboard/forgot-password.html">Forgot Password?</a>
-                                    </div>
-                                    <div class="text-center">
-                                        <a class="small" href="dashboard/register.html">Create an Account!</a>
-                                    </div>
                                 </div>
                             </div>
                         </div>

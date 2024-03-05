@@ -1,26 +1,21 @@
 
 <?php
-include '../koneksi.php';
+include '../../koneksi.php';
 date_default_timezone_set('Asia/Jakarta');
 $sql = "SELECT * FROM toko";
 $result = mysqli_query($conn, $sql);
 $sql = "SELECT * FROM produk_kategori";
 $result1 = mysqli_query($conn, $sql);
-$sql = "SELECT * FROM suplier";
-$result2 = mysqli_query($conn, $sql);
 // Include your database connection code or configuration file here
 // Example: include 'db_connection.php';
 
 // Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve form data
+    $nama_pelanggan = $_POST["nama_pelanggan"];
     $toko_id = $_POST["toko_id"];
-    $nama_produk = $_POST["nama_produk"];
-    $kategori_id = $_POST["kategori_id"];
-    $satuan = $_POST["satuan"];
-    $stok = $_POST["stok"];
-    $harga_jual = $_POST["harga_jual"];
-    $suplier_id = $_POST["suplier_id"];
+    $alamat = $_POST["alamat"];
+    $no_hp = $_POST["no_hp"];
     $create=date("Y-m-d H:i:s");
 
     // Validate and sanitize the data if needed
@@ -34,27 +29,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $pdo = new PDO("mysql:host=localhost;dbname=db_kasir", "root", "");
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $sql = "INSERT INTO produk (produk_id, toko_id, nama_produk, kategori_id, satuan, stok, harga_jual, suplier_id, created_at)
-        VALUES (:produk_id, :toko_id, :nama_produk, :kategori_id, :satuan, :stok, :harga_jual, :suplier_id, :created_at)";
+        $sql = "INSERT INTO pelanggan(pelanggan_id, toko_id, nama_pelanggan, alamat, no_hp, created_at)
+        VALUES (:pelanggan_id, :toko_id, :nama_pelanggan, :alamat, :no_hp, :created_at)";
 
         $stmt = $pdo->prepare($sql);
 
         // Bind parameters
-        $stmt->bindParam(':produk_id', $produk_id);
+        $stmt->bindParam(':pelanggan_id', $kategori_id);
         $stmt->bindParam(':toko_id', $toko_id);
-        $stmt->bindParam(':nama_produk', $nama_produk);
-        $stmt->bindParam(':kategori_id', $kategori_id);
-        $stmt->bindParam(':satuan', $satuan);
-        $stmt->bindParam(':stok', $stok);
-        $stmt->bindParam(':harga_jual', $harga_jual);
-        $stmt->bindParam(':suplier_id', $suplier_id);
+        $stmt->bindParam(':nama_pelanggan', $nama_pelanggan);
+        $stmt->bindParam(':alamat', $alamat);
+        $stmt->bindParam(':no_hp', $no_hp);
         $stmt->bindParam(':created_at', $create);
-
+        
         // Execute the statement
         $stmt->execute();
 
         // Redirect to a success page or display a success message
-        header("Location: ../produk.php");
+        header("Location: ../pelanggan.php");
         exit();
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
@@ -70,7 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tambah Produk</title>
+    <title>Tambah Kategori</title>
     <!-- Include Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
@@ -82,6 +74,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="col-md-6 mx-auto">
                     <table class="table table-bordered">
                         <tbody>
+
+                            <tr>
+                                <td>Nama pelanggan</td>
+                                <td>:</td>
+                                <td><input type="text" name="nama_pelanggan" class="form-control" placeholder="" required></td>
+                            </tr>
                             <tr><td>
                             <?php 
                                 if($result){
@@ -95,65 +93,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     }echo"</select>";
                                 }else{
                                         echo"gagal mengambil data";
-                                    } 
-                            ?>
-                               </td>
-                            </tr>
-                            <tr><td>
-                            <?php 
-                                if($result2){
-                                    echo "<label for='suplier'>Suplier </label></td><td>:</td><td>";
-                                    echo "<select  name='suplier_id'>";
-
-                                    while($row = mysqli_fetch_assoc($result2)){
-                                        $nama_suplier = $row['nama_suplier'];
-                                        $id = $row['suplier_id'];
-                                        echo "<option value='$id'>$nama_suplier </option>";
-                                    }echo"</select>";
-                                }else{
-                                        echo"gagal mengambil data";
                                     }
                                 
                             ?>
-                               </td>
-                            </tr>
                             <tr>
-                                <td>Nama Produk</td>
+                                <td>alamat</td>
                                 <td>:</td>
-                                <td><input type="text" name="nama_produk" class="form-control" placeholder="" required></td>
+                                <td><input type="text" name="alamat" class="form-control" placeholder=" " required></td>
                             </tr>
-                            <tr><td>
-                            <?php 
-                                if($result1){
-                                    echo "<label for='produk_kategori'>kategori </label></td><td>:</td><td>";
-                                    echo "<select  name='kategori_id'>";
-
-                                    while($row = mysqli_fetch_assoc($result1)){
-                                        $nama_kategori = $row['nama_kategori'];
-                                        $id = $row['kategori_id'];
-                                        echo "<option value='$id'>$nama_kategori </option>";
-                                    }echo"</select>";
-                                }else{
-                                        echo"gagal mengambil data";
-                                    }
-                                
-                            ?>
-                               </td>
-                            </tr>
-                            <tr>
-                                <td>Satuan</td>
+                                <td>No HP</td>
                                 <td>:</td>
-                                <td><input type="text" name="satuan" class="form-control" placeholder="" required></td>
-                            </tr>
-                            <tr>
-                                <td>stok</td>
-                                <td>:</td>
-                                <td><input type="int" name="stok" class="form-control" placeholder="" required></td>
-                            </tr>
-                            <tr>
-                                <td>Harga Jual</td>
-                                <td>:</td>
-                                <td><input type="text" name="harga_jual" class="form-control" placeholder="" required></td>
+                                <td><input type="text" name="no_hp" class="form-control" placeholder="" required></td>
                             </tr>
                             <!-- <tr>
                                 <td><input type="text" name="created_at" class="form-control" value="<?php echo date('Y-m-d H:i:s'); ?>" readonly></td>
@@ -163,6 +113,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <button type="submit" class="btn btn-success">Tambah </button>
                                 </td>
                             </tr>
+
                         </tbody>
                     </table>
                 </div>

@@ -1,13 +1,16 @@
 <?php
 include '../koneksi.php';
-$sql = "SELECT * FROM toko";
+$id = $_GET["id"];
+$sql = "SELECT pd.*, p.nama_produk, pl.nama_pelanggan
+FROM penjualan_detail pd
+INNER JOIN produk p ON pd.produk_id = p.produk_id
+INNER JOIN penjualan pjl ON pd.penjualan_id = pjl.penjualan_id
+INNER JOIN pelanggan pl ON pjl.pelanggan_id = pl.pelanggan_id
+WHERE pd.penjualan_id = $id;
+";
+
 $result = mysqli_query($conn, $sql);
-$sql = "SELECT * FROM user";
-$result1 = mysqli_query($conn, $sql);
-$sql = "SELECT * FROM pelanggan";
-$result2 = mysqli_query($conn, $sql);
-$sql = "SELECT * FROM produk";
-$result3 = mysqli_query($conn, $sql);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,7 +23,7 @@ $result3 = mysqli_query($conn, $sql);
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>ADMIN</title>
+    <title>KASIR</title>
 
     <!-- Custom fonts for this template-->
     <link href="../sbadmin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -43,9 +46,9 @@ $result3 = mysqli_query($conn, $sql);
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center">
                 <div class="sidebar-brand-icon rotate-n-15">
-                <i class="fas fa-user"></i>
+                <i class="fas fa-cash-register"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3 ">ADMIN <sup></sup></div>
+                <div class="sidebar-brand-text mx-3 ">KASIR <sup></sup></div>
             </a>
 
             <!-- Divider -->
@@ -53,25 +56,18 @@ $result3 = mysqli_query($conn, $sql);
 
             <!-- Nav Item - Dashboard -->
             <div class="text-center" >
-                <a class="nav-link" href="../dashboard.php">
+                <a class="nav-link" href="dashboard.php">
                     <span class="dashboard" style="font-size: 20px; color: white; font-weight: bold;">Dashboard</span>
                 </a>
             </div>
 
-            <hr class="sidebar-divider my-0">
-
             <!-- Nav Item - Pages Collapse Menu -->
             <div id="collapseTwo" class="text-center" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-blue py-1 collapse-inner rounded">
-                    <p style="display: block;"><a class="collapse-item" href="../produk.php" style="color: white; font-weight: bold; font-size: 20px;">Barang</a></p>
                     <hr class="sidebar-divider">
-                    <p style="display: block;"><a class="collapse-item"  href="../kategori.php" style="color: white; font-weight: bold; font-size: 20px;">Kategori</a></p>
+                    <p style="display: block;"><a class="collapse-item" href="pelanggan.php" style="color: white; font-weight: bold; font-size: 20px;">Pelanggan</a></p>
                     <hr class="sidebar-divider">
-                    <p style="display: block;"><a class="collapse-item" href="../toko.php" style="color: white; font-weight: bold; font-size: 20px;">Toko</a></p>
-                    <hr class="sidebar-divider">
-                    <p style="display: block;"><a class="collapse-item" href="../pelanggan.php" style="color: white; font-weight: bold; font-size: 20px;">Pelanggan</a></p>
-                    <hr class="sidebar-divider">
-                    <p style="display: block;"><a class="collapse-item" href="../supplier.php" style="color: white; font-weight: bold; font-size: 20px;">Suplier</a></p>                
+                    <p style="display: block;"><a class="collapse-item" href="stok_barang.php" style="color: white; font-weight: bold; font-size: 20px;">Stok Barang</a></p>                
                     <hr class="sidebar-divider">              
                 </div>
             </div>
@@ -86,12 +82,10 @@ $result3 = mysqli_query($conn, $sql);
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Transaksi</h6>
-                        <a class="collapse-item" style="font-weight: bold; font-size: 15px;">DETAIL PENJUALAN</a>
-                        <a class="collapse-item" href="pembelian.php" style="font-weight: bold; font-size: 15px;">Pembelian</a>
-                        <a class="collapse-item" href="pembelian_detail.php" style="font-weight: bold; font-size: 15px;">Detail_Pembelian</a>
+                        <a class="collapse-item" href="transaksi.php" style="font-weight: bold; font-size: 15px;">TRANSAKSI</a>
+                        <a class="collapse-item" href="tabel.php" style="font-weight: bold; font-size: 15px;">penjualan </a>
                     </div>
                 </div>
-            </li>
             </li>
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
@@ -142,28 +136,6 @@ $result3 = mysqli_query($conn, $sql);
 
 </nav>
 
-<form
-    class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-    <div class="input-group">
-        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-            aria-label="Search" aria-describedby="basic-addon2">
-        <div class="input-group-append">
-            <button class="btn btn-primary" type="button">
-                <i class="fas fa-search fa-sm"></i>
-            </button>
-        </div>
-    </div>
-</form>
-
-<?php
-include '../koneksi.php';
-
-// Query untuk mengambil data penjualan_detail beserta informasi harga beli dari tabel produk
-$sql = "SELECT * FROM penjualan 
-    INNER JOIN toko ON toko.toko_id = penjualan.toko_id
-    INNER JOIN pelanggan ON penjualan.pelanggan_id = pelanggan.pelanggan_id";
-$result = mysqli_query($conn, $sql);
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -198,48 +170,40 @@ $result = mysqli_query($conn, $sql);
             <div id="content">
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-
-                    <!-- Page Heading -->
-                    <h2 class="text-center mb-5" style="font-weight: bold;">PENJUALAN</h2>
-                    <div class="table-responsive">
-                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                            <thead>
-                                <tr class="text-center" style="">                                   
-                                    <th>Toko</th>
-                                    <th>Nama Pelanggan</th>
-                                    <th>Total</th>
-                                    <th>Bayar</th>
-                                    <th>Sisa</th>
-                                    <th>Keterangan</th>
-                                    <th>Tanggal Dibuat</th>
-                                    <th>Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                if (mysqli_num_rows($result) > 0) {
-                                    // Output data dari setiap baris
-                                    while ($row = mysqli_fetch_assoc($result)) {
-                                        echo "<tr>";
-                                        echo "<td>" . $row["nama_toko"] . "</td>"; // Output nama produk
-                                        echo "<td>" . $row["nama_pelanggan"] . "</td>"; // Output nama produk
-                                        echo "<td>" . $row["total"] . "</td>";
-                                        echo "<td>" . $row["bayar"] . "</td>"; 
-                                        echo "<td>" . $row["sisa"] . "</td>";
-                                        echo "<td>" . $row["keterangan"] . "</td>"; // Output harga beli dari tabel produk
-                                        echo "<td>" . $row["created_at"] . "</td>";
-                                        echo "<td style='text-align: center;'>" . "<a href='penjualan_detail.php?id=". $row["penjualan_id"] ."' class='btn btn-primary'>Detail Penjualan</a>
-                                        <a class='btn btn-danger' href='delete/hapus_produk.php?id=". $row['penjualan_id'] ."'>Hapus</a>
-                                        </td>";                                      
-                                        echo "</tr>";
-
+                    <div class="content-wrapper" style="background-color: #fff; padding: 80px;">
+                            <div class="content-header"></div>
+                        <h2 class="text-center mb-5" style="font-weight: bold;">DETAIL</h2>
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr class="text-center" style="color: black;">                                   
+                                        <th>Nama</th>
+                                        <th>Nama Produk</th>
+                                        <th>Jumlah</th>
+                                        <th>Harga </th>
+                                        <th>Dibuat Pada</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    if (mysqli_num_rows($result) > 0) {
+                                        // Output data dari setiap baris
+                                        while ($row = mysqli_fetch_assoc($result)) {
+                                            echo "<tr>";
+                                            echo "<td>" . $row["nama_pelanggan"] . "</td>"; // Output nama produk
+                                            echo "<td>" . $row["nama_produk"] . "</td>"; // Output nama produk
+                                            echo "<td>" . $row["qty"] . "</td>";
+                                            echo "<td>" . $row["harga_jual"] . "</td>"; // Output harga beli dari tabel produk
+                                            echo "<td>" . $row["created_at"] . "</td>";
+                                            echo "</tr>";
+                                        }
+                                    } else {
+                                        echo "<tr><td colspan='7'>Tidak ada data</td></tr>";
                                     }
-                                } else {
-                                    echo "<tr><td colspan='7'>Tidak ada data</td></tr>";
-                                }
-                                ?>
-                            </tbody>
-                        </table>
+                                    ?>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 <!-- /.container-fluid -->
             </div>

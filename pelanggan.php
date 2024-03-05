@@ -1,6 +1,8 @@
 <?php
 include 'koneksi.php';
-
+session_start();
+if ($_SESSION["username"]){
+    $username = $_SESSION["username"];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,7 +15,7 @@ include 'koneksi.php';
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>KASIR</title>
+    <title>ADMIN</title>
 
     <!-- Custom fonts for this template-->
     <link href="sbadmin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -36,9 +38,9 @@ include 'koneksi.php';
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center">
                 <div class="sidebar-brand-icon rotate-n-15">
-                <i class="fas fa-cash-register"></i>
+                <i class="fas fa-user"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">KASIR <sup></sup></div>
+                <div class="sidebar-brand-text mx-3">ADMIN <sup></sup></div>
             </a>
 
             <!-- Divider -->
@@ -63,7 +65,7 @@ include 'koneksi.php';
                     <hr class="sidebar-divider">
                     <p style="display: block;"><a class="collapse-item" href="toko.php" style="color: white; font-weight: bold; font-size: 20px;">Toko</a></p>
                     <hr class="sidebar-divider">
-                    <p style="display: block;"><a class="collapse-item" href="pelanggan.php" style="color: white; font-weight: bold; font-size: 20px;">Pelanggan</a></p>
+                    <p style="display: block;"><a class="collapse-item" style="color: white; font-weight: bold; font-size: 20px;">Pelanggan</a></p>
                     <hr class="sidebar-divider">
                     <p style="display: block;"><a class="collapse-item" href="supplier.php" style="color: white; font-weight: bold; font-size: 20px;">Suplier</a></p>                
                     <hr class="sidebar-divider">              
@@ -80,8 +82,7 @@ include 'koneksi.php';
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Transaksi</h6>
-                        <a class="collapse-item" href="transaksi/penjualan.php" style="font-weight: bold; font-size: 15px;">Penjualan</a>
-                        <a class="collapse-item" href="transaksi/penjualan_detail.php" style="font-weight: bold; font-size: 15px;">Detail Penjualan</a>
+                        <a class="collapse-item" href="transaksi/penjualan_detail.php" style="font-weight: bold; font-size: 15px;">DETAIL PENJUALAN</a>
                         <a class="collapse-item" href="transaksi/pembelian.php" style="font-weight: bold; font-size: 15px;">Pembelian</a>
                         <a class="collapse-item" href="transaksi/pembelian_detail.php" style="font-weight: bold; font-size: 15px;">Detail_Pembelian</a>
                     </div>
@@ -160,6 +161,7 @@ include 'koneksi.php';
         <thead>
             <tr>
                 <th class="text-center">Nama pelanggan</th> <!-- Pindahkan ke tengah dengan menambahkan kelas text-center di sini -->
+                <th class="text-center">toko</th> <!-- Pindahkan ke tengah dengan menambahkan kelas text-center di sini -->
                 <th class="text-center">Alamat</th> <!-- Pindahkan ke tengah dengan menambahkan kelas text-center di sini -->
                 <th class="text-center">No Hp</th>
                 <th class="text-center">Aksi</th>
@@ -167,33 +169,36 @@ include 'koneksi.php';
         </thead>
         <tbody>
 
-            <?php
+        <?php
                 try {
                     $pdo = new PDO("mysql:host=localhost;dbname=db_kasir", "root", "");
                     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-                    $stmt = $pdo->prepare("SELECT * FROM pelanggan");
+                    $stmt = $pdo->prepare("SELECT pelanggan.*, toko.nama_toko FROM pelanggan LEFT JOIN toko ON pelanggan.toko_id = toko.toko_id");
                     $stmt->execute();
                     $produkData = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                     foreach ($produkData as $produk) {
                         echo "<tr>";
-                        echo "<td class='text-center'>{$produk['nama_pelanggan']}</td>"; // Pindahkan ke tengah dengan menambahkan kelas text-center di sini
-                        echo "<td class='text-center'>{$produk['alamat']}</td>"; // Pindahkan ke tengah dengan menambahkan kelas text-center di sini
-                        echo "<td class='text-center'>{$produk['no_hp']}</td>"; // Pindahkan ke tengah dengan menambahkan kelas text-center di sini
+                        echo "<td class='text-center'>{$produk['nama_pelanggan']}</td>";
+                        // Periksa apakah kunci 'toko' ada dalam array $produk sebelum mengaksesnya
+                        echo "<td class='text-center'>" . (isset($produk['nama_toko']) ? $produk['nama_toko'] : '') . "</td>";
+                        echo "<td class='text-center'>{$produk['alamat']}</td>";
+                        echo "<td class='text-center'>{$produk['no_hp']}</td>";
                         echo "<td class='text-center'>";
-                        echo "<a href='edit.php?id={$produk['toko_id']}' class='btn btn-warning btn-sm'>Edit</a>";
+                        echo "<a href='edit/edit_pelanggan.php?id={$produk['pelanggan_id']}' class='btn btn-warning btn-sm'>Edit</a>";
                         echo " ";
                         echo "<a href='delete/hapus_pelanggan.php?id={$produk['pelanggan_id']}' class='btn btn-danger btn-sm'>Hapus</a>";
                         echo "</td>";
                         echo "</tr>";
                     }
-                } catch (PDOException $e) {
-                    echo "Error: " . $e->getMessage();
-                }
 
-                // Close the database connection
-                $pdo = null;
+                    // Close the database connection
+                    $pdo = null;
+                } catch(PDOException $e) {
+                    // Print PDOException message
+                    echo $e->getMessage();
+                }
             ?>
         </tbody>
     </table>
@@ -221,7 +226,7 @@ include 'koneksi.php';
                 <div class="modal-body">Jika logout anda harus login kembali!</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.php">Logout</a>
+                    <a class="btn btn-primary" href="logout.php">Logout</a>
                 </div>
             </div>
         </div>
@@ -238,5 +243,5 @@ include 'koneksi.php';
     <script src="sbadmin/js/sb-admin-2.min.js"></script>
 
 </body>
-
 </html>
+<?php } ?>

@@ -1,6 +1,8 @@
 <?php
 include 'koneksi.php';
-
+session_start();
+if ($_SESSION["username"]){
+    $username = $_SESSION["username"];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,7 +15,7 @@ include 'koneksi.php';
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title> KASIR</title>
+    <title> ADMIN</title>
 
     <!-- Custom fonts for this template-->
     <link href="sbadmin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -36,9 +38,9 @@ include 'koneksi.php';
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center">
                 <div class="sidebar-brand-icon rotate-n-15">
-                <i class="fas fa-cash-register"></i>
+                <i class="fas fa-user"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">KASIR <sup></sup></div>
+                <div class="sidebar-brand-text mx-3">ADMIN <sup></sup></div>
             </a>
 
             <!-- Divider -->
@@ -57,7 +59,7 @@ include 'koneksi.php';
             <!-- Nav Item - Pages Collapse Menu -->
             <div id="collapseTwo" class="text-center" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-blue py-1 collapse-inner rounded">
-                    <p style="display: block;"><a class="collapse-item" href="produk.php" style="color: white; font-weight: bold; font-size: 20px;">Barang</a></p>
+                    <p style="display: block;"><a class="collapse-item" style="color: white; font-weight: bold; font-size: 20px;">Barang</a></p>
                     <hr class="sidebar-divider">
                     <p style="display: block;"><a class="collapse-item" href="kategori.php" style="color: white; font-weight: bold; font-size: 20px;">Kategori</a></p>
                     <hr class="sidebar-divider">
@@ -80,8 +82,7 @@ include 'koneksi.php';
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Transaksi</h6>
-                        <a class="collapse-item" href="transaksi/penjualan.php" style="font-weight: bold; font-size: 15px;">Penjualan</a>
-                        <a class="collapse-item" href="transaksi/penjualan_detail.php" style="font-weight: bold; font-size: 15px;">Detail Penjualan</a>
+                        <a class="collapse-item" href="transaksi/penjualan_detail.php" style="font-weight: bold; font-size: 15px;">DETAIL PENJUALAN</a>
                         <a class="collapse-item" href="transaksi/pembelian.php" style="font-weight: bold; font-size: 15px;">Pembelian</a>
                         <a class="collapse-item" href="transaksi/pembelian_detail.php" style="font-weight: bold; font-size: 15px;">Detail_Pembelian</a>
                     </div>
@@ -176,12 +177,12 @@ include 'koneksi.php';
                         <table class="table table-bordered">
                             <thead>
                                 <tr class="text-center">
-                                    <th>Produk ID</th>
-                                    <th>Toko ID</th>
+                                    <th>Toko</th>
                                     <th>Nama Produk</th>
-                                    <th>Kategori ID</th>
+                                    <th>Kategori</th>
+                                    <th>Nama Suplier</th>
                                     <th>Satuan</th>
-                                    <th>Harga Beli</th>
+                                    <th>stok</th>
                                     <th>Harga Jual</th>
                                     <th>Aksi</th>
                                 </tr>
@@ -192,22 +193,27 @@ include 'koneksi.php';
                             try {
                                 $pdo = new PDO("mysql:host=localhost;dbname=db_kasir", "root", "");
                                 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-                                $stmt = $pdo->prepare("SELECT * FROM produk");
+                            
+                                $stmt = $pdo->prepare("SELECT produk.produk_id, toko.nama_toko, produk.nama_produk, produk_kategori.nama_kategori, produk.satuan, produk.stok, produk.harga_jual, suplier.nama_suplier 
+                                                        FROM produk 
+                                                        INNER JOIN produk_kategori ON produk.kategori_id = produk_kategori.kategori_id 
+                                                        INNER JOIN suplier ON produk.suplier_id = suplier.suplier_id
+                                                        INNER JOIN toko ON produk.toko_id = toko.toko_id");
                                 $stmt->execute();
                                 $produkData = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
+                            
                                 foreach ($produkData as $produk) {
                                     echo "<tr>";
-                                    echo "<td class='text-center'>{$produk['produk_id']}</td>";
-                                    echo "<td class='text-center'>{$produk['toko_id']}</td>";
+                                    echo "<td class='text-center'>{$produk['nama_toko']}</td>";
                                     echo "<td class='text-center'>{$produk['nama_produk']}</td>";
-                                    echo "<td class='text-center'>{$produk['kategori_id']}</td>";
+                                    echo "<td class='text-center'>{$produk['nama_kategori']}</td>";
+                                    echo "<td class='text-center'>{$produk['nama_suplier']}</td>";
                                     echo "<td class='text-center'>{$produk['satuan']}</td>";
-                                    echo "<td class='text-center'>{$produk['harga_beli']}</td>";
+                                    echo "<td class='text-center'>{$produk['stok']}</td>";
                                     echo "<td class='text-center'>{$produk['harga_jual']}</td>";
                                     echo "<td class='text-center'>";  // Tambahkan kelas 'text-center' di sini
-                                    echo "<a href='edit/Proses_edit_produk_form.php?id={$produk['produk_id']}' class='btn btn-warning'>Edit</a>";
+                                    echo " ";
+                                    echo "<a href='edit/edit_barang.php?id={$produk['produk_id']}' class='btn btn-warning btn-sm'>Edit</a>";
                                     echo " ";
                                     echo "<a href='delete/hapus_produk.php?id={$produk['produk_id']}' class='btn btn-danger'>Hapus</a>";
                                     echo "</td>";
@@ -216,7 +222,7 @@ include 'koneksi.php';
                             } catch (PDOException $e) {
                                 echo "Error: " . $e->getMessage();
                             }
-
+                            
                             // Close the database connection
                             $pdo = null;
                             ?>
@@ -259,7 +265,7 @@ include 'koneksi.php';
                 <div class="modal-body">Jika logout anda harus login kembali!</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.php">Logout</a>
+                    <a class="btn btn-primary" href="logout.php">Logout</a>
                 </div>
             </div>
         </div>
@@ -278,3 +284,4 @@ include 'koneksi.php';
 </body>
 
 </html>
+<?php } ?>
