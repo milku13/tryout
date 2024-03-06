@@ -186,7 +186,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center">
                 <div class="sidebar-brand-icon rotate-n-15">
-                <i class="fas fa-user"></i>
+                <i class="fas fa-cash-register"></i>
                 </div>
                 <div class="sidebar-brand-text mx-3">KASIR <sup></sup></div>
             </a>
@@ -207,7 +207,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <hr class="sidebar-divider">
                     <p style="display: block;"><a class="collapse-item" href="pelanggan.php" style="color: white; font-weight: bold; font-size: 20px;">Pelanggan</a></p>
                     <hr class="sidebar-divider">
-                    <p style="display: block;"><a class="collapse-item" href="supplier.php" style="color: white; font-weight: bold; font-size: 20px;">Stok Barang</a></p>                
+                    <p style="display: block;"><a class="collapse-item" href="stok_barang.php" style="color: white; font-weight: bold; font-size: 20px;">Stok Barang</a></p>                
                     <hr class="sidebar-divider">              
                 </div>
             </div>
@@ -383,12 +383,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Anda Yakin Ingin Keluar?</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-body">Jika logout anda harus login kembali!</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
                     <a class="btn btn-primary" href="../logout.php">Logout</a>
@@ -441,71 +441,85 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             document.getElementById('selectedBarang').style.display = found ? 'block' : 'none';
         }
     });
+    
     document.getElementById('selectedBarang').addEventListener('click', function(event) {
     var clickedElement = event.target;
-    if (clickedElement.classList.contains('dropdown-item')) {
-        var namaBarang = clickedElement.textContent.trim();
-        var hargaBarang = parseFloat(clickedElement.getAttribute('data-harga'));
-        var stokBarang = parseInt(clickedElement.getAttribute('data-stok'));
-        var idBarang = parseInt(clickedElement.getAttribute('data-id')); // Mengambil ID barang dari atribut data-id
+        if (clickedElement.classList.contains('dropdown-item')) {
+            var namaBarang = clickedElement.textContent.trim();
+            var hargaBarang = parseFloat(clickedElement.getAttribute('data-harga'));
+            var stokBarang = parseInt(clickedElement.getAttribute('data-stok'));
+            var idBarang = parseInt(clickedElement.getAttribute('data-id')); // Mengambil ID barang dari atribut data-id
 
-        var qty = prompt("Masukkan jumlah barang untuk " + namaBarang + ":");
-        if (qty === null || qty.trim() === "") {
-            return; // Jika pengguna membatalkan atau tidak memasukkan jumlah, keluar dari fungsi
-        }
+            var qty = prompt("Masukkan jumlah barang untuk " + namaBarang + "");
 
-        // Konversi qty menjadi bilangan bulat
-        qty = parseInt(qty);
+            if (qty === null || qty.trim() === "") {
+                return; // Jika pengguna membatalkan atau tidak memasukkan jumlah, keluar dari fungsi
+            }
 
-        // Validasi qty
-        if (isNaN(qty) || qty <= 0) {
-            alert("Jumlah barang tidak valid.");
-            return; // Jika jumlah barang tidak valid, keluar dari fungsi
-        }
+            // Konversi qty menjadi bilangan bulat
+            qty = parseInt(qty);
 
-        var ulElement = document.getElementById('daftarBarang');
-        var liElement = document.createElement('li');
-        // Tambahkan teks dengan informasi barang ke dalam elemen <li>
-        liElement.textContent = namaBarang + ' - Qty: ' + qty + ' - Rp' + hargaBarang.toFixed(2) + ' - Stok: ' + stokBarang;
+            // Validasi qty
+            if (isNaN(qty) || qty <= 0) {
+                alert("Jumlah barang tidak valid.");
+                return; // Jika jumlah barang tidak valid, keluar dari fungsi
+            }
 
-        // Menambahkan atribut data-harga dan data-stok ke elemen <li>
-        liElement.setAttribute('data-harga', hargaBarang);
-        liElement.setAttribute('data-stok', stokBarang);
+            // Periksa stok barang
+            if (stokBarang === 0) {
+                // Tampilkan notifikasi bahwa barang sudah habis
+                alert("Barang sudah habis.");
+                return; // Jika stok barang habis, keluar dari fungsi
+            } else if (qty > stokBarang) {
+                // Tampilkan notifikasi bahwa stok barang hanya tersedia sebanyak yang ada
+                alert("Stok barang hanya tersedia " + stokBarang);
+                return; // Jika jumlah yang diminta melebihi stok barang, keluar dari fungsi
+            }
 
-        // Tambahkan elemen <li> ke dalam elemen <ul>
-        ulElement.appendChild(liElement);
+            var ulElement = document.getElementById('daftarBarang');
+            var liElement = document.createElement('li');
+            // Tambahkan teks dengan informasi barang ke dalam elemen <li>
+            liElement.textContent = namaBarang + ' - Qty: ' + qty + ' - Rp' + (hargaBarang * qty).toFixed(2) + ' - Stok: ' + stokBarang;
 
-        // Buat input checkbox
-        var checkbox = document.createElement('input');
-        checkbox.type = 'checkbox';
-        checkbox.value = idBarang + '|' + qty; // Menggunakan ID barang sebagai nilai checkbox
-        checkbox.checked = true; 
-        checkbox.style.display = 'none';
-        checkbox.name = 'barang[]'; 
-        checkbox.setAttribute('data-qty', qty);
+            // Menambahkan atribut data-harga dan data-stok ke elemen <li>
+            liElement.setAttribute('data-harga', hargaBarang); // Harga barang tetap
+            liElement.setAttribute('data-harga-jual', hargaBarang); // Harga jual barang tetap
+            liElement.setAttribute('data-stok', stokBarang);
 
-        // Tambahkan input checkbox ke dalam elemen <li>
-        liElement.appendChild(checkbox);
+            // Tambahkan elemen <li> ke dalam elemen <ul>
+            ulElement.appendChild(liElement);
+
+            // Buat input checkbox
+            var checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.value = idBarang + '|' + qty; // Menggunakan ID barang sebagai nilai checkbox
+            checkbox.checked = true; 
+            checkbox.style.display = 'none';
+            checkbox.name = 'barang[]'; 
+            checkbox.setAttribute('data-qty', qty);
+
+            // Tambahkan input checkbox ke dalam elemen <li>
+            liElement.appendChild(checkbox);
 
 
-        // Tambahkan event listener untuk menghapus elemen <li> saat diklik
-        liElement.addEventListener('click', function() {
-            ulElement.removeChild(liElement);
+            // Tambahkan event listener untuk menghapus elemen <li> saat diklik
+            liElement.addEventListener('click', function() {
+                ulElement.removeChild(liElement);
+                updateTotal();
+            });
+
+            // Memperbarui total harga
             updateTotal();
-        });
-
-        // Memperbarui total harga
-        updateTotal();
-    }
-});
-
+        }
+    });
 
 function updateTotal() {
     var total = 0;
     var liElements = document.querySelectorAll('#daftarBarang li');
     liElements.forEach(function(li) {
-        var hargaBarang = parseFloat(li.getAttribute('data-harga'));
-        total += hargaBarang;
+        var hargaBarang = parseFloat(li.getAttribute('data-harga-jual')); // Mengambil harga jual dari atribut data-harga-jual
+        var qty = parseInt(li.querySelector('input[type="checkbox"]').getAttribute('data-qty'));
+        total += hargaBarang * qty; // Menggunakan harga jual barang dikalikan dengan qty
     });
     document.getElementById('total').value = total; // Menampilkan total
 

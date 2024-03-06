@@ -8,14 +8,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $user_id = $_POST['user_id'];   
     $toko_id = $_POST['toko_id'];   
     $username = $_POST['username'];   
-    $password = $_POST['password'];   
     $email = $_POST['email'];   
     $nama_lengkap = $_POST['nama_lengkap'];   
     $alamat = $_POST['alamat'];   
-    $role = $_POST['role'];   
+    $access_level = $_POST['access_level'];   
 
     // Buat SQL untuk melakukan pembaruan data
-    $sql_update = "UPDATE user SET toko_id='$toko_id', username='$username', password='$password', email='$email', nama_lengkap='$nama_lengkap', alamat='$alamat', role='$role' WHERE user_id='$user_id'";
+    $sql_update = "UPDATE user SET toko_id='$toko_id', username='$username', email='$email', nama_lengkap='$nama_lengkap', alamat='$alamat', access_level='$access_level' WHERE user_id='$user_id'";
     $resultupdate = mysqli_query($conn, $sql_update);
 
     // Eksekusi query pembaruan data
@@ -85,10 +84,7 @@ $result2 = mysqli_fetch_assoc($result2);
                     <label for="username">Username:</label>
                     <input type="text" class="form-control" id="username" name="username" value="<?php echo $result2["username"]; ?>" required>
                 </div>
-                <div class="form-group">
-                    <label for="password">Password:</label>
-                    <input type="password" class="form-control" id="password" name="password" required>
-                </div>
+                
                 <div class="form-group">
                     <label for="email">Email:</label>
                     <input type="email" class="form-control" id="email" name="email" value="<?php echo $result2["email"]; ?>" required>
@@ -102,10 +98,10 @@ $result2 = mysqli_fetch_assoc($result2);
                     <input type="text" class="form-control" id="alamat" name="alamat" value="<?php echo $result2["alamat"]; ?>" required>
                 </div>
                 <div class="form-group">
-                    <label for="role">Role:</label>
-                    <select name="role" class="form-control" required>
-                        <option value="kasir" <?php if($result2["role"] == "kasir") echo "selected"; ?>>Kasir</option>
-                        <option value="admin" <?php if($result2["role"] == "admin") echo "selected"; ?>>Admin</option>
+                    <label for="access_level">Role:</label>
+                    <select name="access_level" class="form-control" required>
+                        <option value="kasir" <?php if($result2["access_level"] == "kasir") echo "selected"; ?>>Kasir</option>
+                        <option value="admin" <?php if($result2["access_level"] == "admin") echo "selected"; ?>>Admin</option>
                     </select>
                 </div>
             <?php }?>

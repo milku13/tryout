@@ -82,9 +82,9 @@ if ($_SESSION["username"]){
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Transaksi</h6>
-                        <a class="collapse-item" href="transaksi/penjualan_detail.php" style="font-weight: bold; font-size: 15px;">DETAIL PENJUALAN</a>
+                        <a class="collapse-item" href="transaksi/penjualan_detail.php" style="font-weight: bold; font-size: 15px;">Penjualan</a>
                         <a class="collapse-item" href="transaksi/pembelian.php" style="font-weight: bold; font-size: 15px;">Pembelian</a>
-                        <a class="collapse-item" href="transaksi/pembelian_detail.php" style="font-weight: bold; font-size: 15px;">Detail_Pembelian</a>
+                        <a class="collapse-item" href="transaksi/pembelian_detail.php" style="font-weight: bold; font-size: 15px;">DETAIL PEMBELIAN</a>
                     </div>
                 </div>
             </li>
@@ -101,6 +101,9 @@ if ($_SESSION["username"]){
                     </div>
                 </div>
             </li>
+
+            <hr class="sidebar-divider my-1">
+            
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
@@ -147,56 +150,57 @@ if ($_SESSION["username"]){
 
 </nav>
             <!-- content -->
+<div class="container-fluid"> 
+<div class="content-wrapper" style="background-color: #fff; padding: 80px;">
+    <div class="content-header"></div>
+    <h2 class="text-center mb"><b>TOKO</b></h2>
+    <div class="container">
+        <form action="tambah/tambah_toko.php" method="get">
+            <button type='submit' class='btn btn-success mb-2' style="color: black;">Tambah</button>
+        </form>
+        <table class="table table-bordered table-sm" style="color: black;">
+            <thead>
+                    <tr class="text-center">
+                    <th class="text-center">Nama Toko</th> <!-- Pindahkan ke tengah dengan menambahkan kelas text-center di sini -->
+                    <th class="text-center">Alamat</th> <!-- Pindahkan ke tengah dengan menambahkan kelas text-center di sini -->
+                    <th class="text-center">No Tlp</th>
+                    <th class="text-center">aksi</th>
+                </tr>
+            </thead>
+            <tbody>
 
-<h2 class="text-center">TOKO</h2>
+                <?php
+                    try {
+                        $pdo = new PDO("mysql:host=localhost;dbname=db_kasir", "root", "");
+                        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-<div class="container">
-    <form action="tambah/tambah_toko.php" method="get">
-        <button type='submit' class='btn btn-success mb-2'>Tambah</button>
-    </form>
-    <table class="table table-bordered table-sm">
-        <thead>
-                <tr class="text-center">
-                <th class="text-center">Nama Toko</th> <!-- Pindahkan ke tengah dengan menambahkan kelas text-center di sini -->
-                <th class="text-center">Alamat</th> <!-- Pindahkan ke tengah dengan menambahkan kelas text-center di sini -->
-                <th class="text-center">No Tlp</th>
-                <th class="text-center">aksi</th>
-            </tr>
-        </thead>
-        <tbody>
+                        $stmt = $pdo->prepare("SELECT * FROM toko");
+                        $stmt->execute();
+                        $produkData = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            <?php
-                try {
-                    $pdo = new PDO("mysql:host=localhost;dbname=db_kasir", "root", "");
-                    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-                    $stmt = $pdo->prepare("SELECT * FROM toko");
-                    $stmt->execute();
-                    $produkData = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-                    foreach ($produkData as $produk) {
-                        echo "<tr>";
-                        echo "<td class='text-center'>{$produk['nama_toko']}</td>"; // Pindahkan ke tengah dengan menambahkan kelas text-center di sini
-                        echo "<td class='text-center'>{$produk['alamat']}</td>"; // Pindahkan ke tengah dengan menambahkan kelas text-center di sini
-                        echo "<td class='text-center'>{$produk['tlp_hp']}</td>"; // Pindahkan ke tengah dengan menambahkan kelas text-center di sini
-                        echo "<td class='text-center'>";
-                        echo "<a href='edit/edit_toko.php?id={$produk['toko_id']}' class='btn btn-warning btn-sm'>Edit</a>";
-                        echo " ";
-                        echo "<a href='delete/hapus_toko.php?id={$produk['toko_id']}' class='btn btn-danger btn-sm'>Hapus</a>";
-                        echo "</td>";
-                        echo "</tr>";
+                        foreach ($produkData as $produk) {
+                            echo "<tr>";
+                            echo "<td class='text-center'>{$produk['nama_toko']}</td>"; // Pindahkan ke tengah dengan menambahkan kelas text-center di sini
+                            echo "<td class='text-center'>{$produk['alamat']}</td>"; // Pindahkan ke tengah dengan menambahkan kelas text-center di sini
+                            echo "<td class='text-center'>{$produk['tlp_hp']}</td>"; // Pindahkan ke tengah dengan menambahkan kelas text-center di sini
+                            echo "<td class='text-center'>";
+                            echo "<a href='edit/edit_toko.php?id={$produk['toko_id']}' class='btn btn-warning btn-sm'>Edit</a>";
+                            echo " ";
+                            echo "<a href='delete/hapus_toko.php?id={$produk['toko_id']}' class='btn btn-danger btn-sm'>Hapus</a>";
+                            echo "</td>";
+                            echo "</tr>";
+                        }
+                    } catch (PDOException $e) {
+                        echo "Error: " . $e->getMessage();
                     }
-                } catch (PDOException $e) {
-                    echo "Error: " . $e->getMessage();
-                }
 
-                // Close the database connection
-                $pdo = null;
-            ?>
-        </tbody>
-    </table>
+                    // Close the database connection
+                    $pdo = null;
+                ?>
+            </tbody>
+        </table>
+    </div>
 </div>
-
 
 
  <!-- Bootstrap JS (optional, jika diperlukan) -->

@@ -348,13 +348,13 @@ if(isset($_POST['id_suplier'])){
         }
         function updateTotal() {
             let total = 0;
-    const checkboxes = document.querySelectorAll('.selectProduct:checked');
-    checkboxes.forEach(function (checkbox) {
-        const productName = checkbox.value;
-        const qty = parseFloat(document.getElementById('qty' + productName).value) || 0;
-        const harga = parseFloat(document.getElementById('harga' + productName).textContent.replace(/\D/g, '')) || 0;
-        total += harga * qty;
-    });
+        const checkboxes = document.querySelectorAll('.selectProduct:checked');
+        checkboxes.forEach(function (checkbox) {
+            const productName = checkbox.value;
+            const qty = parseFloat(document.getElementById('qty' + productName).value) || 0;
+            const harga = parseFloat(document.getElementById('harga' + productName).textContent.replace(/\D/g, '')) || 0;
+            total += harga * qty;
+        });
     document.getElementById('total').value = total; // Update the total input field
     hitungSisa(); 
             }

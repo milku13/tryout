@@ -82,9 +82,9 @@ if ($_SESSION["username"]){
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Transaksi</h6>
-                        <a class="collapse-item" href="transaksi/penjualan_detail.php" style="font-weight: bold; font-size: 15px;">DETAIL PENJUALAN</a>
+                        <a class="collapse-item" href="transaksi/penjualan_detail.php" style="font-weight: bold; font-size: 15px;">Penjualan</a>
                         <a class="collapse-item" href="transaksi/pembelian.php" style="font-weight: bold; font-size: 15px;">Pembelian</a>
-                        <a class="collapse-item" href="transaksi/pembelian_detail.php" style="font-weight: bold; font-size: 15px;">Detail_Pembelian</a>
+                        <a class="collapse-item" href="transaksi/pembelian_detail.php" style="font-weight: bold; font-size: 15px;">DETAIL PEMBELIAN</a>
                     </div>
                 </div>
             </li>
@@ -102,17 +102,8 @@ if ($_SESSION["username"]){
                 </div>
             </li>
             
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-
-            <!-- Nav Item - Pages Collapse Menu -->
-
-            <!-- Nav Item - Charts -->
-
-            <!-- Nav Item - Tables -->
+            <hr class="sidebar-divider my-1">
             
-            <!-- Divider -->
-
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
@@ -163,18 +154,18 @@ if ($_SESSION["username"]){
                     </ul>
 
                 </nav>
-                <!-- End of Topbar -->
-                
+                <!-- End of Topbar -->                
                 <!-- content -->
-
-
-                    <h2 class="text-center">PRODUK</h2>
-
-                    <div class="container">
+             <div class="container-fluid"> 
+            <div class="content-wrapper" style="background-color: #fff; padding: 80px;">
+                <div class="content-header"></div>
+                <h2 class="text-center mb" ><b>PRODUK</b></h2>
+                <div class="container">
+                    <table class="table table-bordered">
                         <form action="tambah/tambah_produk.php" method="get">
-                            <button type='submit' class='btn btn-success mb-2'>Tambah</button>
+                            <button type='submit' class='btn btn-success mb-2'style="color: black;">Tambah</button>
                         </form>
-                        <table class="table table-bordered">
+                        <table class="table table-bordered" style="color: black;">
                             <thead>
                                 <tr class="text-center">
                                     <th>Toko</th>
@@ -229,23 +220,13 @@ if ($_SESSION["username"]){
                             </tbody>
                         </table>
                 </div>
-
-
                  <!-- Bootstrap JS (optional, jika diperlukan) -->
                     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
                 <!-- Begin Page Content -->
-
-                <!-- /.container-fluid -->
-
             </div>
-            <!-- End of Main Content -->
-
         </div>
-        <!-- End of Content Wrapper -->
-
     </div>
-    <!-- End of Page Wrapper -->
-
+    
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>

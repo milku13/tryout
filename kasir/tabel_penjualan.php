@@ -179,8 +179,8 @@ $result = mysqli_query($conn, $sql);
                     <div class="content-wrapper" style="background-color: #fff; padding: 80px;">
                         <div class="content-header"></div>
                         <h2 class="text-center mb-5" style="font-weight: bold;">PENJUALAN</h2>
-                        <div class="table-responsive">
-                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <div class="table-responsive" >
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" style="color: black;">
                                 <thead>
                                     <tr class="text-center" style="color: black">                                   
                                         <th>Toko</th>

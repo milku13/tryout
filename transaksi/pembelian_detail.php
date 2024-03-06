@@ -48,7 +48,7 @@ if ($_SESSION["username"]){
 
             <!-- Nav Item - Dashboard -->
             <div class="text-center" >
-                <a class="nav-link" href="dashboard.php">
+                <a class="nav-link" href="../dashboard.php">
                     <span class="dashboard" style="font-size: 20px; color: white; font-weight: bold;">Dashboard</span>
                 </a>
             </div>
@@ -59,15 +59,15 @@ if ($_SESSION["username"]){
             <!-- Nav Item - Pages Collapse Menu -->
             <div id="collapseTwo" class="text-center" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-blue py-1 collapse-inner rounded">
-                    <p style="display: block;"><a class="collapse-item" href="produk.php" style="color: white; font-weight: bold; font-size: 20px;">Barang</a></p>
+                    <p style="display: block;"><a class="collapse-item" href="../produk.php" style="color: white; font-weight: bold; font-size: 20px;">Barang</a></p>
                     <hr class="sidebar-divider">
-                    <p style="display: block;"><a class="collapse-item" href="kategori.php" style="color: white; font-weight: bold; font-size: 20px;">Kategori</a></p>
+                    <p style="display: block;"><a class="collapse-item" href="../kategori.php" style="color: white; font-weight: bold; font-size: 20px;">Kategori</a></p>
                     <hr class="sidebar-divider">
-                    <p style="display: block;"><a class="collapse-item" style="color: white; font-weight: bold; font-size: 20px;">Toko</a></p>
+                    <p style="display: block;"><a class="collapse-item"  href="../toko.php" style="color: white; font-weight: bold; font-size: 20px;">Toko</a></p>
                     <hr class="sidebar-divider">
-                    <p style="display: block;"><a class="collapse-item" href="pelanggan.php" style="color: white; font-weight: bold; font-size: 20px;">Pelanggan</a></p>
+                    <p style="display: block;"><a class="collapse-item" href="../pelanggan.php" style="color: white; font-weight: bold; font-size: 20px;">Pelanggan</a></p>
                     <hr class="sidebar-divider">
-                    <p style="display: block;"><a class="collapse-item" href="supplier.php" style="color: white; font-weight: bold; font-size: 20px;">Suplier</a></p>                
+                    <p style="display: block;"><a class="collapse-item" href="../supplier.php" style="color: white; font-weight: bold; font-size: 20px;">Suplier</a></p>                
                     <hr class="sidebar-divider">              
                 </div>
             </div>
@@ -82,9 +82,9 @@ if ($_SESSION["username"]){
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Transaksi</h6>
-                        <a class="collapse-item" href="penjualan_detail.php" style="font-weight: bold; font-size: 15px;">DETAIL PENJUALAN</a>
+                        <a class="collapse-item" href="penjualan_detail.php" style="font-weight: bold; font-size: 15px;">Penjualan</a>
                         <a class="collapse-item" href="pembelian.php" style="font-weight: bold; font-size: 15px;">Pembelian</a>
-                        <a class="collapse-item" href="pembelian_detail.php" style="font-weight: bold; font-size: 15px;">Detail_Pembelian</a>
+                        <a class="collapse-item" href="pembelian_detail.php" style="font-weight: bold; font-size: 15px;">DETAIL PEMBELIAN</a>
                     </div>
                 </div>
             </li>
@@ -101,6 +101,9 @@ if ($_SESSION["username"]){
                     </div>
                 </div>
             </li>
+
+            <hr class="sidebar-divider my-1">
+            
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
@@ -147,11 +150,13 @@ if ($_SESSION["username"]){
 
 </nav>
             <!-- content -->
-<div>
-    <h2>Data Pembelian Barang</h2>
+<div class="container-fluid"> 
+<div class="content-wrapper" style="background-color: #fff; padding: 80px;">
+    <div class="content-header"></div>
+    <h4 class="text-center" style="font-weight: bold;">DETAIL</h4>
 
     <a href="pembelian.php"><button onclick="tambahPembelian()" class='btn btn-primary mb-4'>Tambah Pembelian</button></a>
-    <table id="tabelPembelian" class="table">
+    <table id="tabelPembelian" class="table table-bordered">
         <tr>
             <th>Pembelian ID</th>
             <th>Nama Toko</th>

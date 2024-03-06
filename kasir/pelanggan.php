@@ -60,7 +60,7 @@ $result2=mysqli_query($conn,$sql);
                 <div class="sidebar-brand-icon rotate-n-15">
                 <i class="fas fa-cash-register"></i>
                 </div>
-                <div class="sidebar-brand-text mx-2 ">KASIR <sup></sup></div>
+                <div class="sidebar-brand-text mx-3 ">KASIR <sup></sup></div>
             </div>
 
             <!-- Divider -->
@@ -79,7 +79,7 @@ $result2=mysqli_query($conn,$sql);
             <!-- Nav Item - Pages Collapse Menu -->
             <div id="collapseTwo" class="text-center" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-blue py-1 collapse-inner rounded">
-                    <p style="display: block;"><a class="collapse-item" href="pelanggan.php" style="color: white; font-weight: bold; font-size: 20px;">Pelanggan</a></p>
+                    <p style="display: block;"><a class="collapse-item" style="color: white; font-weight: bold; font-size: 20px;">Pelanggan</a></p>
                     <hr class="sidebar-divider">
                     <p style="display: block;"><a class="collapse-item" href="stok_barang.php" style="color: white; font-weight: bold; font-size: 20px;">Stok Barang</a></p>                
                     <hr class="sidebar-divider">              
@@ -97,7 +97,7 @@ $result2=mysqli_query($conn,$sql);
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Transaksi</h6>
                         <a class="collapse-item" href="transaksi.php" style="font-weight: bold; font-size: 15px;">TRANSAKSI</a>
-                        <a class="collapse-item" href="tabel_penjualan.php" style="font-weight: bold; font-size: 15px;">Detail</a>
+                        <a class="collapse-item" href="tabel_penjualan.php" style="font-weight: bold; font-size: 15px;">Penjualan</a>
                     </div>
                 </div>
             </li>
@@ -125,10 +125,6 @@ $result2=mysqli_query($conn,$sql);
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                         <i class="fa fa-bars"></i>
                     </button>
-
-                    <!-- Topbar Search -->
-
-                    <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
 
                         <!-- Nav Item - Search Dropdown (Visible Only XS) -->
@@ -179,29 +175,26 @@ $result2=mysqli_query($conn,$sql);
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-
-                    <!-- Page Heading -->
-                    <!-- Content Row -->
                     <div class="content-wrapper" style="height: 91.6vh; background-color: #fff; padding: 80px;">
                     <div class="content-header"></div>
-                    <h2 class="text-center" style="margin-top: 6px;">PELANGGAN</h2>
+                    <h2 class="text-center" style="margin-top: 6px; font-weight: bold;">PELANGGAN</h2>
                     <form action="tambah/tambah_pelanggan_kasir.php" method="get">
-                        <button type='submit' class='btn btn-success mb-2'>Tambah</button>
+                        <button type='submit' class='btn btn-success mb-2' style="color: black;">Tambah</button>
                     </form>
-                    <table class="table table-bordered table-sm">
-                        <thead>
-                            <tr style="color: black;">
-                                <th class="text-center">Nama Pelanggan</th> <!-- Pindahkan ke tengah dengan menambahkan kelas text-center di sini -->
-                                <th class="text-center">Nama Toko</th> <!-- Pindahkan ke tengah dengan menambahkan kelas text-center di sini -->
-                                <th class="text-center">Alamat</th> <!-- Pindahkan ke tengah dengan menambahkan kelas text-center di sini -->
-                                <th class="text-center">No Hp</th>
-                                <th class="text-center">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                            <table class="table table-bordered table-sm" style="color: black;">
+                                <thead>
+                                    <tr style="color: black;">
+                                        <th class="text-center">Nama Pelanggan</th>
+                                        <th class="text-center">Nama Toko</th> 
+                                        <th class="text-center">Alamat</th> 
+                                        <th class="text-center">No Hp</th>
+                                        <th class="text-center">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
 
-                                <?php
-                                        try {
+                                        <?php
+                                                try {
                                             $pdo = new PDO("mysql:host=localhost;dbname=db_kasir", "root", "");
                                             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
@@ -212,7 +205,6 @@ $result2=mysqli_query($conn,$sql);
                                             foreach ($produkData as $produk) {
                                                 echo "<tr>";
                                                 echo "<td class='text-center'>{$produk['nama_pelanggan']}</td>";
-                                                // Periksa apakah kunci 'toko' ada dalam array $produk sebelum mengaksesnya
                                                 echo "<td class='text-center'>" . (isset($produk['nama_toko']) ? $produk['nama_toko'] : '') . "</td>";
                                                 echo "<td class='text-center'>{$produk['alamat']}</td>";
                                                 echo "<td class='text-center'>{$produk['no_hp']}</td>";
@@ -223,7 +215,6 @@ $result2=mysqli_query($conn,$sql);
                                                 echo "</td>";
                                                 echo "</tr>";
                                             }
-
                                             // Close the database connection
                                             $pdo = null;
                                         } catch(PDOException $e) {

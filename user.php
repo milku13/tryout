@@ -82,9 +82,9 @@ if ($_SESSION["username"]){
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Transaksi</h6>
-                        <a class="collapse-item" href="transaksi/penjualan_detail.php" style="font-weight: bold; font-size: 15px;">PENJUALAN DETAIL</a>
+                        <a class="collapse-item" href="transaksi/penjualan_detail.php" style="font-weight: bold; font-size: 15px;">Penjualan</a>
                         <a class="collapse-item" href="transaksi/pembelian.php" style="font-weight: bold; font-size: 15px;">Pembelian</a>
-                        <a class="collapse-item" href="transaksi/pembelian_detail.php" style="font-weight: bold; font-size: 15px;">Detail_Pembelian</a>
+                        <a class="collapse-item" href="transaksi/pembelian_detail.php" style="font-weight: bold; font-size: 15px;">DETAIL PEMBELIAN</a>
                     </div>
                 </div>
             </li>
@@ -160,13 +160,16 @@ if ($_SESSION["username"]){
                 <!-- content -->
 
 
-                    <h2 class="text-center">PENGGUNA</h2>
+                <div class="container-fluid"> 
+                <div class="content-wrapper" style="background-color: #fff; padding: 80px;">
+                    <div class="content-header"></div>
+                    <h2 class="text-center mb"><b>USER</b></h2>
 
                     <div class="container">
                         <form action="tambah/tambah_pengguna.php" method="get">
-                            <button type='submit' class='btn btn-success mb-2'>Tambah Pengguna</button>
+                            <button type='submit' class='btn btn-success mb-2' style="color: black;">Tambah Pengguna</button>
                         </form>
-                        <table class="table table-bordered">
+                        <table class="table table-bordered" style="color: black;">
                             <thead>
                                 <tr class="text-center">
                                     <th>Username</th>

@@ -15,7 +15,7 @@ if ($_SESSION["username"]){
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>KASIR</title>
+    <title>ADMIN</title>
 
     <!-- Custom fonts for this template-->
     <link href="sbadmin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -34,6 +34,7 @@ if ($_SESSION["username"]){
 
         <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+            <hr class="sidebar-divider my-1">
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center">
@@ -44,7 +45,7 @@ if ($_SESSION["username"]){
             </a>
 
             <!-- Divider -->
-            <hr class="sidebar-divider my-0">
+            <hr class="sidebar-divider my-1">
 
             <!-- Nav Item - Dashboard -->
             <div class="text-center" >
@@ -82,9 +83,9 @@ if ($_SESSION["username"]){
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Transaksi</h6>
-                        <a class="collapse-item" href="transaksi/penjualan_detail.php" style="font-weight: bold; font-size: 15px;">DETAIL PENJUALAN</a>
+                        <a class="collapse-item" href="transaksi/penjualan_detail.php" style="font-weight: bold; font-size: 15px;">Penjualan</a>
                         <a class="collapse-item" href="transaksi/pembelian.php" style="font-weight: bold; font-size: 15px;">Pembelian</a>
-                        <a class="collapse-item" href="transaksi/pembelian_detail.php" style="font-weight: bold; font-size: 15px;">Detail_Pembelian</a>
+                        <a class="collapse-item" href="transaksi/pembelian_detail.php" style="font-weight: bold; font-size: 15px;">DETAIL PEMBELIAN</a>
                     </div>
                 </div>
             </li>
@@ -101,6 +102,10 @@ if ($_SESSION["username"]){
                     </div>
                 </div>
             </li>
+
+            <hr class="sidebar-divider my-1">
+            
+            <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
             </div>
@@ -142,14 +147,15 @@ if ($_SESSION["username"]){
             </ul>
         </nav>
             <!-- content -->
-
-<h2 class="text-center">KATEGORI</h2>
-
+<div class="container-fluid"> 
+<div class="content-wrapper" style="background-color: #fff; padding: 80px;">
+    <div class="content-header"></div>
+    <h2 class="text-center mb"><b>KATEGORI</b></h2>
     <div class="container">
     <form action="tambah/tambah_kategori.php" method="get">
-        <button type='submit' class='btn btn-success mb-2'>Tambah</button>
+        <button type='submit' class='btn btn-success mb-2' style="color: black;">Tambah</button>
     </form>
-    <table class="table table-bordered table-sm">
+    <table class="table table-bordered table-sm" style="color: black;">
         <thead>
             <tr>
                 <th class="text-center">Nama kategori</th> <!-- Pindahkan ke tengah dengan menambahkan kelas text-center di sini -->

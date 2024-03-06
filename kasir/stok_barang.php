@@ -77,7 +77,7 @@ if ($_SESSION["username"]){
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Transaksi</h6>
                         <a class="collapse-item" href="transaksi.php" style="font-weight: bold; font-size: 15px;">TRANSAKSI</a>
-                        <a class="collapse-item" href="tabel_penjualan.php" style="font-weight: bold; font-size: 15px;">Detail</a>
+                        <a class="collapse-item" href="tabel_penjualan.php" style="font-weight: bold; font-size: 15px;">Penjualan</a>
                     </div>
                 </div>
             </li>
@@ -132,9 +132,9 @@ if ($_SESSION["username"]){
         <div class="container-fluid"> 
             <div class="content-wrapper" style="background-color: #fff; padding: 80px;">
                 <div class="content-header"></div>
-                <h2 class="text-center mb"><b>PRODUK</b></h2>
+                <h2 class="text-center mb-5"><b>STOK BARANG</b></h2>
                 <div class="container">
-                    <table class="table table-bordered">
+                    <table class="table table-bordered" style="color: black;">
                         <thead style="color: black;">
                             <tr class="text-center">
                                 <th>Nama Produk</th>                           
@@ -205,7 +205,7 @@ if ($_SESSION["username"]){
                 <div class="modal-body">Jika logout anda harus login kembali!</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="logout.php">Logout</a>
+                    <a class="btn btn-primary" href="../logout.php">Logout</a>
                 </div>
             </div>
         </div>

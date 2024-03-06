@@ -8,6 +8,7 @@ $result1=mysqli_query($conn,$sql);
 $sql="SELECT * FROM penjualan";
 $result2=mysqli_query($conn,$sql);
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -34,7 +35,7 @@ $result2=mysqli_query($conn,$sql);
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Dashboard</title>
+    <title>KASIR</title>
 
     <!-- Custom fonts for this template-->
     <link href="../sbadmin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -60,7 +61,7 @@ $result2=mysqli_query($conn,$sql);
                 <div class="sidebar-brand-icon rotate-n-15">
                 <i class="fas fa-cash-register"></i>
                 </div>
-                <div class="sidebar-brand-text mx-2 ">KASIR <sup></sup></div>
+                <div class="sidebar-brand-text mx-3 ">KASIR <sup></sup></div>
             </div>
 
             <!-- Divider -->
@@ -113,7 +114,7 @@ $result2=mysqli_query($conn,$sql);
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content-wrapper" class="d-flex flex-column row justify-content-center">
 
             <!-- Main Content -->
             <div id="content">
@@ -135,17 +136,12 @@ $result2=mysqli_query($conn,$sql);
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
-                <div class="container-fluid">
-
-                    <!-- Page Heading -->
+                <div class="container-fluid ">
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+                        <h1 class="h3 mb-0 text-gray-800" style="font-weight: bold;">Dashboard</h1>
                     </div>
-
                     <!-- Content Row -->
-                    <div class="row">
+                    <div class="row justify-content-center">
 
                         <!-- Earnings (Monthly) Card Example -->
                         <div class="col-xl-3 col-md-6 mb-4">
@@ -153,7 +149,7 @@ $result2=mysqli_query($conn,$sql);
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1 text-center"><h4>Data Barang</h4></div>
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1 text-center"><h4 style="font-weight: bold;">Data Barang</h4></div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
                                             <span class="info-box-number">
                                             <br><h2 class="text-center"><b><?php echo mysqli_num_rows($result)?></b></h2></br>
@@ -171,7 +167,7 @@ $result2=mysqli_query($conn,$sql);
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"><h4>KATEGORI</h4></div>
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1 text-center"><h4 style="font-weight: bold;">KATEGORI</h4></div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
                                             <span class="info-box-number">
                                             <br><h2 class="text-center"><b><?php echo mysqli_num_rows($result1)?></b></h2></br>
@@ -189,28 +185,10 @@ $result2=mysqli_query($conn,$sql);
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1 text-center"><h4>TELAH TERJUAL</h4></div>
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1 text-center"><h4 style="font-weight: bold;">TELAH TERJUAL</h4></div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
                                             <span class="info-box-number">
                                             <br><h2 class="text-center"><b><?php echo mysqli_num_rows($result2)?></b></h2></br>
-                                            </span>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-primary shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1 text-center"><h4>sTOK BARANG</h4></div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
-                                            <span class="info-box-number">
-                                            <br><h2 class="text-center"><b><?php echo mysqli_num_rows($result)?></b></h2></br>
                                             </span>
                                         </div>
                                         <div class="col-auto">

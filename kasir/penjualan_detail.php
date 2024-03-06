@@ -83,7 +83,7 @@ $result = mysqli_query($conn, $sql);
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Transaksi</h6>
                         <a class="collapse-item" href="transaksi.php" style="font-weight: bold; font-size: 15px;">TRANSAKSI</a>
-                        <a class="collapse-item" href="tabel.php" style="font-weight: bold; font-size: 15px;">penjualan </a>
+                        <a class="collapse-item" href="tabel_penjualan.php" style="font-weight: bold; font-size: 15px;">penjualan </a>
                     </div>
                 </div>
             </li>
@@ -174,7 +174,7 @@ $result = mysqli_query($conn, $sql);
                             <div class="content-header"></div>
                         <h2 class="text-center mb-5" style="font-weight: bold;">DETAIL</h2>
                         <div class="table-responsive">
-                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" style="color: black;">
                                 <thead>
                                     <tr class="text-center" style="color: black;">                                   
                                         <th>Nama</th>

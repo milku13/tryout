@@ -38,7 +38,7 @@ if ($_SESSION["username"]){
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Dashboard</title>
+    <title>ADMIN</title>
 
     <!-- Custom fonts for this template-->
     <link href="sbadmin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -68,7 +68,7 @@ if ($_SESSION["username"]){
             </div>
 
             <!-- Divider -->
-            <hr class="sidebar-divider my-0">
+            <hr class="sidebar-divider my-1">
 
             <!-- Nav Item - Dashboard -->
             <div class="text-center" >
@@ -77,8 +77,7 @@ if ($_SESSION["username"]){
                 </a>
             </div>
 
-            <!-- Divider -->
-            <hr class="sidebar-divider">
+            <hr class="sidebar-divider my-1">
 
             <!-- Nav Item - Pages Collapse Menu -->
             <div id="collapseTwo" class="text-center" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
@@ -106,9 +105,9 @@ if ($_SESSION["username"]){
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Transaksi</h6>
-                        <a class="collapse-item" href="transaksi/penjualan_detail.php" style="font-weight: bold; font-size: 15px;">DETAIL PENJUALAN</a>
+                        <a class="collapse-item" href="transaksi/penjualan_detail.php" style="font-weight: bold; font-size: 15px;">Penjualan</a>
                         <a class="collapse-item" href="transaksi/pembelian.php" style="font-weight: bold; font-size: 15px;">Pembelian</a>
-                        <a class="collapse-item" href="transaksi/pembelian_detail.php" style="font-weight: bold; font-size: 15px;">Detail_Pembelian</a>
+                        <a class="collapse-item" href="transaksi/pembelian_detail.php" style="font-weight: bold; font-size: 15px;">DETAIL PEMBELIAN</a>
                     </div>
                 </div>
             </li>
@@ -126,10 +125,9 @@ if ($_SESSION["username"]){
                 </div>
             </li>
 
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-
-            <!-- Heading -->
+            <hr class="sidebar-divider my-1">
+            
+            <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
             </div>
@@ -206,13 +204,11 @@ if ($_SESSION["username"]){
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+                        <h1 class="h3 mb-0 text-gray-800" style="font-weight: bold;">Dashboard</h1>
                     </div>
 
                     <!-- Content Row -->
-                    <div class="row">
+                    <div class="row justify-content-center">
 
                         <!-- Earnings (Monthly) Card Example -->
                         <div class="col-xl-3 col-md-6 mb-4">
@@ -220,10 +216,10 @@ if ($_SESSION["username"]){
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1 text-center"><h4>Data Barang</h4></div>
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1 text-center"><h4 style="font-weight: bold;">Data Barang</h4></div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
                                             <span class="info-box-number">
-                                            <br><h4 class="text-center"><b><?php echo mysqli_num_rows($result)?></b></h4></br>
+                                            <br><h2 class="text-center"><b><?php echo mysqli_num_rows($result)?></b></h2></br>
                                             </span>
                                         </div>
                                         <div class="col-auto">
@@ -237,7 +233,7 @@ if ($_SESSION["username"]){
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1 text-center"><h4>KATEGORI</h4></div>
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1 text-center"><h4 style="font-weight: bold;">KATEGORI</h4></div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
                                             <span class="info-box-number">
                                             <br><h2 class="text-center"><b><?php echo mysqli_num_rows($result1)?></b></h2></br>
@@ -254,27 +250,10 @@ if ($_SESSION["username"]){
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1 text-center"><h4>TELAH TERJUAL</h4></div>
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1 text-center"><h4 style="font-weight: bold;">TELAH TERJUAL</h4></div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
                                             <span class="info-box-number">
                                             <br><h2 class="text-center"><b><?php echo mysqli_num_rows($result2)?></b></h2></br>
-                                            </span>
-                                        </div>
-                                        <div class="col-auto">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-primary shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1 text-center"><h4>STOK BARANG</h4></div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
-                                            <span class="info-box-number">
-                                            <br><h2 class="text-center"><b><?php echo mysqli_num_rows($result)?></b></h2></br>
                                             </span>
                                         </div>
                                         <div class="col-auto">
