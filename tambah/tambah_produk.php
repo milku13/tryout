@@ -19,6 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $kategori_id = $_POST["kategori_id"];
     $satuan = $_POST["satuan"];
     $stok = $_POST["stok"];
+    $harga_beli = $_POST["harga_beli"];
     $harga_jual = $_POST["harga_jual"];
     $suplier_id = $_POST["suplier_id"];
     $create=date("Y-m-d H:i:s");
@@ -34,8 +35,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $pdo = new PDO("mysql:host=localhost;dbname=db_kasir", "root", "");
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $sql = "INSERT INTO produk (produk_id, toko_id, nama_produk, kategori_id, satuan, stok, harga_jual, suplier_id, created_at)
-        VALUES (:produk_id, :toko_id, :nama_produk, :kategori_id, :satuan, :stok, :harga_jual, :suplier_id, :created_at)";
+        $sql = "INSERT INTO produk (produk_id, toko_id, nama_produk, kategori_id, satuan, stok, harga_beli, harga_jual, suplier_id, created_at)
+        VALUES (:produk_id, :toko_id, :nama_produk, :kategori_id, :satuan, :stok, :harga_beli, :harga_jual, :suplier_id, :created_at)";
 
         $stmt = $pdo->prepare($sql);
 
@@ -46,6 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bindParam(':kategori_id', $kategori_id);
         $stmt->bindParam(':satuan', $satuan);
         $stmt->bindParam(':stok', $stok);
+        $stmt->bindParam(':harga_beli', $harga_beli);
         $stmt->bindParam(':harga_jual', $harga_jual);
         $stmt->bindParam(':suplier_id', $suplier_id);
         $stmt->bindParam(':created_at', $create);
@@ -149,6 +151,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <td>stok</td>
                                 <td>:</td>
                                 <td><input type="int" name="stok" class="form-control" placeholder="" required></td>
+                            </tr>
+                            <tr>
+                                <td>Harga Beli</td>
+                                <td>:</td>
+                                <td><input type="text" name="harga_beli" class="form-control" placeholder="" required></td>
                             </tr>
                             <tr>
                                 <td>Harga Jual</td>

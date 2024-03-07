@@ -174,6 +174,7 @@ if ($_SESSION["username"]){
                                     <th>Nama Suplier</th>
                                     <th>Satuan</th>
                                     <th>stok</th>
+                                    <th>Harga Beli</th>
                                     <th>Harga Jual</th>
                                     <th>Aksi</th>
                                 </tr>
@@ -185,7 +186,7 @@ if ($_SESSION["username"]){
                                 $pdo = new PDO("mysql:host=localhost;dbname=db_kasir", "root", "");
                                 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                             
-                                $stmt = $pdo->prepare("SELECT produk.produk_id, toko.nama_toko, produk.nama_produk, produk_kategori.nama_kategori, produk.satuan, produk.stok, produk.harga_jual, suplier.nama_suplier 
+                                $stmt = $pdo->prepare("SELECT produk.produk_id, produk.harga_beli, toko.nama_toko, produk.nama_produk, produk_kategori.nama_kategori, produk.satuan, produk.stok, produk.harga_jual, suplier.nama_suplier 
                                                         FROM produk 
                                                         INNER JOIN produk_kategori ON produk.kategori_id = produk_kategori.kategori_id 
                                                         INNER JOIN suplier ON produk.suplier_id = suplier.suplier_id
@@ -201,6 +202,7 @@ if ($_SESSION["username"]){
                                     echo "<td class='text-center'>{$produk['nama_suplier']}</td>";
                                     echo "<td class='text-center'>{$produk['satuan']}</td>";
                                     echo "<td class='text-center'>{$produk['stok']}</td>";
+                                    echo "<td class='text-center'>{$produk['harga_beli']}</td>";
                                     echo "<td class='text-center'>{$produk['harga_jual']}</td>";
                                     echo "<td class='text-center'>";  // Tambahkan kelas 'text-center' di sini
                                     echo " ";
